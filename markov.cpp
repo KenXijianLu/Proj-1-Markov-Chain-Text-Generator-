@@ -21,7 +21,21 @@ string joinWords(const string words[], int startIndex, int count) {
 
 // Reads words from a file and returns the number read, or -1 on open failure.
 int readWordsFromFile(string filename, string words[], int maxWords) {
-    return 0;
+    ifstream file(filename);
+
+    if (!file.is_open()) { 
+        return -1;
+    }
+
+    int numWords = 0;
+    string word;
+
+    while (numWords < maxWords && file >> word) {
+        words[numWords++] = word;
+    }
+
+    file.close();
+    return numWords;
 }
 
 // Stores prefix-suffix pairs and returns the number of entries built.
