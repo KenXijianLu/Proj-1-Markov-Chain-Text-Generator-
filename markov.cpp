@@ -6,7 +6,17 @@ using namespace std;
 
 // Joins a selected range of words with spaces between them.
 string joinWords(const string words[], int startIndex, int count) {
-    return "";
+    string result = "";
+
+    for (int i = 0; i < count; i++) {
+        result += words[startIndex + i];
+
+        if (i < count - 1) {
+            result += " ";
+        }
+    }
+
+    return result;
 }
 
 // Reads words from a file and returns the number read, or -1 on open failure.
