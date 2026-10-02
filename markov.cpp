@@ -101,5 +101,45 @@ string getRandomPrefix(const string prefixes[], int chainSize) {
 // Generates text by following recorded prefix-suffix transitions.
 string generateText(const string prefixes[], const string suffixes[],
                     int chainSize, int order, int numWords) {
-    return "";
+    if (chainSize <= 0 || order < 1 || order > 3 || numWords < order) {
+        return "";
+    }
+
+    string currentPrefix = getRandomPrefix(prefixes, chainSize);
+    string result = currentPrefix;
+
+    string currentWords[3];
+    int wordIndex = 0;
+    string temp = "";
+
+    for (string::size_type i = 0; i < currentPrefix.length(); i++) {
+        if (currentPrefix[i] == ' ') {
+            currentWords[wordIndex] = temp;
+            wordIndex++;
+            temp = "";
+        } else {
+            temp += currentPrefix[i];
+        }
+    }
+    currentWords[wordIndex] = temp;
+
+    for (int i = 0; i < numWords - order; i++) {
+        string newWord = getRandomSuffix(
+            prefixes, suffixes, chainSize, currentPrefix);
+
+        if (newWord == "") {
+            break;
+        }
+
+        result += " " + newWord;
+
+        for (int j = 0; j < order - 1; j++) {
+            currentWords[j] = currentWords[j + 1];
+        }
+
+        currentWords[order - 1] = newWord;
+        currentPrefix = joinWords(currentWords, 0, order);
+    }
+
+    return result;
 }
