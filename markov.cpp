@@ -42,7 +42,19 @@ int readWordsFromFile(string filename, string words[], int maxWords) {
 int buildMarkovChain(const string words[], int numWords, int order,
                      string prefixes[], string suffixes[],
                      int maxChainSize) {
-    return 0;
+    if (order < 1 || order > 3 || numWords <= order || maxChainSize <= 0) {
+        return 0;
+    }
+
+    int count = 0;
+
+    for (int i = 0; i < numWords - order && count < maxChainSize; i++) {
+        prefixes[count] = joinWords(words, i, order);
+        suffixes[count] = words[i + order];
+        count++;
+    }
+
+    return count;
 }
 
 // Randomly selects a word that follows the given prefix.
