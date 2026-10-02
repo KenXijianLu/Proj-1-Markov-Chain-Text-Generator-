@@ -90,7 +90,12 @@ string getRandomSuffix(const string prefixes[], const string suffixes[],
 
 // Selects a random starting prefix from the chain.
 string getRandomPrefix(const string prefixes[], int chainSize) {
-    return "";
+    if (chainSize <= 0) {
+        return "";
+    }
+
+    int index = rand() % chainSize;
+    return prefixes[index];
 }
 
 // Generates text by following recorded prefix-suffix transitions.
